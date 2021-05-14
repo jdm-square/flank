@@ -157,7 +157,7 @@ private fun Map<String, Any>.createDetails() = Instrument.Status.Details(
     className = get("class") as String,
     testName = get("test") as String,
     stack = get("stack")?.run {
-        require(this is List<*>)
+        this as List<*>
         joinToString("\n") { line -> line.toString().trim() }
     }
 )
