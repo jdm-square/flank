@@ -600,6 +600,14 @@ gcloud:
   ##       This may dramatically increase the amount of expected shards depending upon how many parameterized tests are discovered.
   # parameterized-tests: default
 
+  # Make Robo re-sign the app-under-test APK for a higher quality crawl. If your app cannot properly function when 
+  # re-signed, disable this feature. When an app-under-test APK is not re-signed, Robo crawl is slower and Robo has 
+  # access to less information about the state of the crawled app, which reduces crawl quality. Consequently, if your 
+  # Roboscript has actions on elements of RecyclerView or AdapterView, and you disable APK re-signing, those actions 
+  # might require manual tweaking because Robo does not identify RecyclerView and AdapterView in this mode. 
+  # Enabled by default, use --no-resign to disable.
+  # resign: true
+
 flank:
   # -- FlankYml --
 

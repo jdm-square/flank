@@ -61,7 +61,8 @@ object TestMatrixAndroid {
             val appApkGcsPath: String,
             val testRunnerClass: String?,
             val scenarioNumbers: List<String>,
-            val scenarioLabels: List<String>
+            val scenarioLabels: List<String>,
+            val resign: Boolean
         ) : Type()
     }
 

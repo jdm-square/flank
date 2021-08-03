@@ -8,4 +8,5 @@ internal fun createGameLoopTest(config: TestMatrixAndroid.Type.GameLoop) = Andro
     appApk = FileReference().setGcsPath(config.appApkGcsPath)
     scenarioLabels = config.scenarioLabels
     scenarios = config.scenarioNumbers.map { it.toInt() }
+    // resign = config.resign
 }

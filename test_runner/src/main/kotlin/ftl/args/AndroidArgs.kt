@@ -65,7 +65,9 @@ data class AndroidArgs(
     val parameterizedTests: String,
 
     @property:IgnoreInStatistics
-    val customSharding: Map<String, AndroidTestShards>
+    val customSharding: Map<String, AndroidTestShards>,
+
+    val resign: Boolean
 ) : IArgs by commonArgs {
     companion object : AndroidArgsCompanion()
 
@@ -106,6 +108,7 @@ AndroidArgs
       test-targets-for-shard:${ArgsToString.listOfListToString(testTargetsForShard)}
       fail-fast: $failFast
       parameterized-tests: $parameterizedTests
+      resign: $resign
 
     flank:
       max-test-shards: $maxTestShards

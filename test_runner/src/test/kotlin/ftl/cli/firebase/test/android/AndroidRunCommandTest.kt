@@ -590,4 +590,20 @@ class AndroidRunCommandTest {
         val output = systemOutRule.log.normalizeLineEnding()
         assertThat(output).containsMatch("version: .*")
     }
+
+    @Test
+    fun `resign parse`() {
+        val cmd = AndroidRunCommand()
+        CommandLine(cmd).parseArgs("--resign")
+
+        assertThat(cmd.config.platform.gcloud.resign).isTrue()
+    }
+
+    @Test
+    fun `noResign parse`() {
+        val cmd = AndroidRunCommand()
+        CommandLine(cmd).parseArgs("--no-resign")
+
+        assertThat(cmd.config.platform.gcloud.resign).isFalse()
+    }
 }

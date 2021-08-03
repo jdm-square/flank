@@ -29,6 +29,7 @@ fun createAndroidArgs(
     autoGoogleLogin = gcloud::autoGoogleLogin.require(),
     additionalApks = gcloud::additionalApks.require().map { it.normalizeFilePath() },
     roboScript = gcloud.roboScript?.normalizeFilePath(),
+    resign = gcloud::resign.require(),
 
     // flank
     additionalAppTestApks = flank.additionalAppTestApks?.map {

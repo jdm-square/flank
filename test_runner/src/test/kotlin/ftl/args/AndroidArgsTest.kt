@@ -127,6 +127,7 @@ class AndroidArgsTest {
             locale: en
             orientation: portrait
           num-flaky-test-attempts: 3
+          resign: false
 
         flank:
           max-test-shards: 7
@@ -298,6 +299,7 @@ class AndroidArgsTest {
             assert(disableSharding, true)
             assert(runTimeout, "20m")
             assert(outputStyle, OutputStyle.Single)
+            assert(resign, false)
         }
     }
 
@@ -360,6 +362,7 @@ AndroidArgs
       test-targets-for-shard:
       fail-fast: false
       parameterized-tests: default
+      resign: false
 
     flank:
       max-test-shards: 7
@@ -450,6 +453,7 @@ AndroidArgs
       test-targets-for-shard:
       fail-fast: false
       parameterized-tests: default
+      resign: true
 
     flank:
       max-test-shards: 1
@@ -2845,6 +2849,40 @@ AndroidArgs
         val parsedYml = AndroidArgs.load(yaml).validate()
         val chunks = runBlocking { parsedYml.runAndroidTests() }.shardChunks
         assertTrue(chunks.size == 5)
+    }
+
+    @Test
+    fun `cli resign`() {
+        val cli = AndroidRunCommand()
+        CommandLine(cli).parseArgs("--resign")
+
+        val yaml = """
+        gcloud:
+          app: $appApk
+          test: $testApk
+          resign: false
+      """
+        assertThat(AndroidArgs.load(yaml).validate().resign).isFalse()
+
+        val androidArgs = AndroidArgs.load(yaml, cli).validate()
+        assertThat(androidArgs.resign).isTrue()
+    }
+
+    @Test
+    fun `cli noResign`() {
+        val cli = AndroidRunCommand()
+        CommandLine(cli).parseArgs("--no-resign")
+
+        val yaml = """
+        gcloud:
+          app: $appApk
+          test: $testApk
+          resing: true
+      """
+        assertThat(AndroidArgs.load(yaml).validate().resign).isTrue()
+
+        val androidArgs = AndroidArgs.load(yaml, cli).validate()
+        assertThat(androidArgs.resign).isFalse()
     }
 }
 

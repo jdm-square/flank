@@ -14,7 +14,7 @@ internal fun AndroidArgs.createAndroidTestMatrixType(
 ): TestMatrixAndroid.Type = when (testContext) {
     is InstrumentationTestContext -> createInstrumentationConfig(testContext)
     is RoboTestContext -> createRoboConfig(testContext)
-    is SanityRoboTestContext -> createSanityRoboConfig(testContext)
+    is SanityRoboTestContext -> createSanityRoboConfig(testContext, resign)
     is GameLoopContext -> createAndroidLoopConfig(testContext)
 }
 
@@ -24,7 +24,8 @@ internal fun AndroidArgs.createAndroidLoopConfig(
     appApkGcsPath = testApk.app.remote,
     testRunnerClass = testRunnerClass,
     scenarioLabels = scenarioLabels,
-    scenarioNumbers = scenarioNumbers
+    scenarioNumbers = scenarioNumbers,
+    resign = true
 )
 
 internal fun AndroidArgs.createInstrumentationConfig(
@@ -52,7 +53,8 @@ internal fun AndroidArgs.createRoboConfig(
 )
 
 internal fun createSanityRoboConfig(
-    testApk: SanityRoboTestContext
+    testApk: SanityRoboTestContext,
+    resign: Boolean
 ) = TestMatrixAndroid.Type.Robo(
     appApkGcsPath = testApk.app.remote,
     flankRoboDirectives = null,

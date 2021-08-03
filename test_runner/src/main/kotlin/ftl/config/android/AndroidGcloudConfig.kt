@@ -262,6 +262,25 @@ data class AndroidGcloudConfig @JsonIgnore constructor(
     @set:JsonProperty("parameterized-tests")
     var parameterizedTests: String? by data
 
+    @set:CommandLine.Option(
+        names = ["--resign"],
+        description = [
+            "Make Robo re-sign the app-under-test APK for a higher quality crawl." +
+                "Enabled by default, use --no-resign to disable.\n"
+        ]
+    )
+    @set:JsonProperty("resign")
+    var resign: Boolean? by data
+
+    @CommandLine.Option(
+        names = ["--no-resign"],
+        description = ["Make Robo not re-sign the app-under-test APK for a higher quality crawl. Use --resign to enable."]
+    )
+    @JsonIgnore
+    fun noResign(value: Boolean?) {
+        resign = value?.not() ?: false
+    }
+
     constructor() : this(mutableMapOf<String, Any?>().withDefault { null })
 
     companion object : IYmlKeys {
@@ -291,6 +310,7 @@ data class AndroidGcloudConfig @JsonIgnore constructor(
             roboScript = null
             testTargetsForShard = emptyList()
             parameterizedTests = FlankDefaults.DEFAULT_PARAMETERIZED_TESTS
+            resign = true
         }
     }
 }
